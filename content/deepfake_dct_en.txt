@@ -1,0 +1,3 @@
+Research on detecting synthetic images through frequency domain analysis using Discrete Cosine Transform coefficients. This work explores how AI-generated faces leave distinctive patterns in the DCT domain.
+
+The method achieves 94.2% accuracy on a combined dataset of real and synthetic images.

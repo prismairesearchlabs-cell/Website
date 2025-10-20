@@ -1,0 +1,18 @@
+{
+  "models": [
+    {
+      "id": 1,
+      "name_en": "Deepfake Detector CNN",
+      "name_kn": "ಡೀಪ್‌ಫೇಕ್ ಡಿಟೆಕ್ಟರ್ CNN",
+      "version": "v1.0",
+      "date": "2025-10-10",
+      "content": "deepfake_detector_cnn",
+      "framework": "Keras/TensorFlow",
+      "fileType": "h5",
+      "fileSize": "45.3 MB",
+      "downloadUrl": "models/deepfake_detector_v1.h5",
+      "architecture": "CNN",
+      "dataset": "VGG-Face"
+    }
+  ]
+}

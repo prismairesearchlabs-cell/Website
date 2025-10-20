@@ -1,0 +1,14 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title_en": "Deepfake Detection using DCT Analysis",
+      "title_kn": "DCT ವಿಶ್ಲೇಷಣೆ ಬಳಸಿ ಡೀಪ್‌ಫೇಕ್ ಪತ್ತೆ",
+      "date": "2025-10-15",
+      "author": "Girish G Hegde",
+      "content": "deepfake_dct",
+      "pdf": "papers/deepfake_dct_analysis.pdf",
+      "tags": ["Computer Vision", "Deep Learning", "Image Processing"]
+    }
+  ]
+}

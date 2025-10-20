@@ -1,310 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PRISMA | Research Lab</title>
-<meta name="description" content="Prisma AI Research Lab - Publications and Model Weights" />
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
-
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Courier New', 'Monaco', monospace;
-  font-size: 14px;
-  line-height: 1.6;
-  background: #000;
-  color: #ccc;
-  padding: 20px;
-}
-
-body.light {
-  background: #fafafa;
-  color: #222;
-}
-
-body.light a { color: #d65a0a; }
-body.light .ascii-border { border-color: #ddd; }
-body.light .card { border-color: #ddd; background: #fff; }
-body.light .btn { border-color: #d65a0a; color: #d65a0a; }
-body.light .btn:hover { background: #d65a0a; color: #fff; }
-body.light input { background: #fff; border-color: #ddd; color: #222; }
-
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* ASCII Header */
-.ascii-header {
-  text-align: center;
-  margin: 20px 0 30px;
-  white-space: pre;
-  font-size: 11px;
-  line-height: 1.2;
-  color: #e87c1b;
-}
-
-.subtitle {
-  text-align: center;
-  margin: -10px 0 30px;
-  font-size: 12px;
-  opacity: 0.6;
-}
-
-/* Controls */
-.controls {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-  z-index: 100;
-}
-
-.ctrl-btn {
-  background: none;
-  border: 1px solid #e87c1b;
-  color: #e87c1b;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 11px;
-  transition: all 0.2s;
-}
-
-.ctrl-btn:hover {
-  background: #e87c1b;
-  color: #000;
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 0;
-  margin-bottom: 30px;
-  border: 1px solid #e87c1b;
-}
-
-.tabs button {
-  flex: 1;
-  background: none;
-  border: none;
-  border-right: 1px solid #e87c1b;
-  color: #ccc;
-  padding: 12px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 12px;
-  transition: all 0.2s;
-}
-
-.tabs button:last-child { border-right: none; }
-
-.tabs button.active {
-  background: #e87c1b;
-  color: #000;
-}
-
-.tabs button:hover:not(.active) {
-  background: rgba(232, 124, 27, 0.1);
-}
-
-/* Search */
-.search-bar {
-  width: 100%;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #444;
-  color: #ccc;
-  font-family: inherit;
-  font-size: 13px;
-  margin-bottom: 20px;
-}
-
-.search-bar:focus {
-  outline: none;
-  border-color: #e87c1b;
-}
-
-/* Filters */
-.filters {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  background: none;
-  border: 1px solid #444;
-  color: #888;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 11px;
-  transition: all 0.2s;
-}
-
-.filter-btn.active {
-  border-color: #e87c1b;
-  color: #e87c1b;
-}
-
-.filter-btn:hover {
-  border-color: #e87c1b;
-}
-
-/* Cards */
-.grid {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.card {
-  border: 1px solid #444;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  transition: border-color 0.2s;
-}
-
-.card:hover {
-  border-color: #e87c1b;
-}
-
-.card-title {
-  font-size: 15px;
-  font-weight: bold;
-  color: #e87c1b;
-  margin-bottom: 8px;
-}
-
-.card-meta {
-  font-size: 11px;
-  opacity: 0.6;
-  margin-bottom: 12px;
-}
-
-.card-content {
-  font-size: 13px;
-  line-height: 1.7;
-  margin-bottom: 15px;
-  color: #aaa;
-}
-
-.tags {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
-}
-
-.tag {
-  font-size: 10px;
-  padding: 3px 8px;
-  border: 1px solid #555;
-  color: #888;
-}
-
-.model-info {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin: 15px 0;
-  padding: 12px;
-  border: 1px solid #333;
-  font-size: 11px;
-}
-
-.model-info-item {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.model-info-label {
-  opacity: 0.5;
-  font-size: 9px;
-  text-transform: uppercase;
-}
-
-.model-info-value {
-  color: #e87c1b;
-}
-
-.btn {
-  display: inline-block;
-  padding: 8px 16px;
-  border: 1px solid #e87c1b;
-  color: #e87c1b;
-  text-decoration: none;
-  font-size: 12px;
-  text-align: center;
-  transition: all 0.2s;
-  background: none;
-}
-
-.btn:hover {
-  background: #e87c1b;
-  color: #000;
-}
-
-/* Section */
-.section {
-  display: none;
-}
-
-.section.active {
-  display: block;
-}
-
-/* Loading/Empty */
-.loading, .empty {
-  text-align: center;
-  padding: 40px;
-  opacity: 0.5;
-  font-size: 13px;
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  margin-top: 60px;
-  padding-top: 20px;
-  border-top: 1px solid #333;
-  font-size: 11px;
-  opacity: 0.5;
-}
-
-.ascii-divider {
-  text-align: center;
-  margin: 30px 0;
-  opacity: 0.3;
-  font-size: 10px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  body { padding: 10px; }
-  .ascii-header { font-size: 8px; }
-  .controls { position: static; margin-bottom: 20px; }
-  .model-info { grid-template-columns: repeat(2, 1fr); }
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PRISMA Research Lab</title>
+  <meta name="description" content="Prisma AI Research Lab - Publications and Model Weights">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Courier New", Monaco, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      background: #000;
+      color: #ccc;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    main.container { max-width: 900px; margin: 0 auto; }
+    .ascii-header {
+      text-align: center; margin: 20px 0 30px;
+      white-space: pre; font-size: 11px; line-height: 1.2; color: #e87c1b;
+    }
+    .subtitle { text-align: center; margin: -10px 0 30px; font-size: 12px; opacity: 0.6; }
+    .controls {
+      position: fixed; top: 20px; right: 20px;
+      display: flex; gap: 10px; z-index: 100;
+    }
+    .ctrl-btn, .back-link {
+      background: none; border: 1px solid #e87c1b; color: #e87c1b;
+      padding: 6px 12px; cursor: pointer; font-family: inherit; font-size: 11px;
+      transition: all 0.2s; text-decoration: none; display: inline-block;
+    }
+    .ctrl-btn:focus, .back-link:focus { outline: 2px dashed #e87c1b; }
+    .ctrl-btn:hover, .back-link:hover { background: #e87c1b; color: #000; }
+    .tabs { display: flex; gap: 0; margin-bottom: 30px; border: 1px solid #e87c1b; }
+    .tabs button {
+      flex: 1; background: none; border: none; border-right: 1px solid #e87c1b;
+      color: #ccc; padding: 12px; cursor: pointer; font-family: inherit; font-size: 12px;
+      transition: all 0.2s;
+    }
+    .tabs button:last-child { border-right: none; }
+    .tabs button.active, .tabs button:focus.active { background: #e87c1b; color: #000; }
+    .tabs button:focus:not(.active) { background: rgba(232,124,27,0.2); }
+    .tabs button:hover:not(.active) { background: rgba(232,124,27,0.1); }
+    .search-bar {
+      width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.05);
+      border: 1px solid #444; color: #ccc; font-family: inherit; font-size: 13px; margin-bottom: 20px;
+    }
+    .search-bar:focus { outline: none; border-color: #e87c1b; }
+    .filters { display: flex; gap: 8px; margin-bottom: 30px; flex-wrap: wrap; }
+    .filter-btn {
+      background: none; border: 1px solid #444; color: #888; padding: 6px 12px;
+      cursor: pointer; font-family: inherit; font-size: 11px; transition: all 0.2s;
+    }
+    .filter-btn.active { border-color: #e87c1b; color: #e87c1b; }
+    .filter-btn:focus { outline: 2px dashed #e87c1b; }
+    .filter-btn:hover { border-color: #e87c1b; }
+    .grid { display: flex; flex-direction: column; gap: 20px; }
+    .card { border: 1px solid #444; padding: 20px; background: rgba(255,255,255,0.02); transition: border-color 0.2s; }
+    .card:hover { border-color: #e87c1b; }
+    .card-title { font-size: 15px; font-weight: bold; color: #e87c1b; margin-bottom: 8px; }
+    .card-meta { font-size: 11px; opacity: 0.6; margin-bottom: 12px; }
+    .card-content { font-size: 13px; line-height: 1.7; margin-bottom: 15px; color: #aaa; }
+    .tags { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+    .tag { font-size: 10px; padding: 3px 8px; border: 1px solid #555; color: #888; }
+    .model-info {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      margin: 15px 0; padding: 12px; border: 1px solid #333; font-size: 11px;
+    }
+    .model-info-item { display: flex; flex-direction: column; gap: 3px; }
+    .model-info-label { opacity: 0.5; font-size: 9px; text-transform: uppercase; }
+    .model-info-value { color: #e87c1b; }
+    .btn {
+      display: inline-block; padding: 8px 16px; border: 1px solid #e87c1b; color: #e87c1b;
+      text-decoration: none; font-size: 12px; text-align: center; transition: all 0.2s; background: none;
+    }
+    .btn:focus { outline: 2px dashed #e87c1b; }
+    .btn:hover { background: #e87c1b; color: #000; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .loading, .empty { text-align: center; padding: 40px; opacity: 0.5; font-size: 13px; }
+    .footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #333; font-size: 11px; opacity: 0.5; }
+    .ascii-divider { text-align: center; margin: 30px 0; opacity: 0.3; font-size: 10px; }
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .ascii-header { font-size: 8px; }
+      .controls { position: static; margin-bottom: 20px; }
+      .model-info { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
 </head>
 <body>
-
-<div class="controls">
-  <button class="ctrl-btn" id="langBtn">KA</button>
-  <button class="ctrl-btn" id="themeBtn">◐</button>
-</div>
-
-<div class="container">
-  
-  <!-- ASCII Header -->
-  <pre class="ascii-header">
+  <nav class="controls" aria-label="Page controls">
+    <a class="back-link" href="https://girishgh7.github.io/personal-Website/" aria-label="Back to main website">
+      ← Back | [translate:ಹಿಂತಿರುಗಿ]
+    </a>
+    <button class="ctrl-btn" id="langBtn" type="button" aria-label="Toggle language">KA</button>
+  </nav>
+  <main class="container" role="main">
+    <header>
+      <div class="ascii-header" aria-hidden="true">
 ┌─────────────────────────────────────────────────┐
 │  ██████╗ ██████╗ ██╗███████╗███╗   ███╗ █████╗  │
 │  ██╔══██╗██╔══██╗██║██╔════╝████╗ ████║██╔══██╗ │
@@ -312,290 +108,231 @@ body.light input { background: #fff; border-color: #ddd; color: #222; }
 │  ██╔═══╝ ██╔══██╗██║╚════██║██║╚██╔╝██║██╔══██║ │
 │  ██║     ██║  ██║██║███████║██║ ╚═╝ ██║██║  ██║ │
 │  ╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ │
-└─────────────────────────────────────────────────┘</pre>
+└─────────────────────────────────────────────────┘
+      </div>
+      <div class="subtitle">PRISMA Research Lab | [translate:PRISMA ಸಂಶೋಧನಾ ಪ್ರಯೋಗಾಲಯ]</div>
+    </header>
+    <nav class="tabs" role="tablist">
+      <button class="active" data-tab="pubs" data-en="Publications" data-ka="[translate:ಪ್ರಕಾಶನಗಳು]" aria-selected="true" role="tab">Publications | [translate:ಪ್ರಕಾಶನಗಳು]</button>
+      <button data-tab="models" data-en="Models" data-ka="[translate:ಮಾದರಿ]" aria-selected="false" role="tab">Models | [translate:ಮಾದರಿ]</button>
+    </nav>
+    <section id="pubs" class="section active" role="tabpanel" aria-labelledby="publications-tab">
+      <input type="text" autocomplete="off" class="search-bar" id="searchPubs"
+             placeholder="search... | [translate:ಹುಡುಕಿ...]" data-en-ph="search..." data-ka-ph="[translate:ಹುಡುಕಿ...]">
+      <div class="filters" id="pubFilters"></div>
+      <div class="grid" id="pubsGrid">
+        <div class="loading">loading... | [translate:ಲೋಡ್ ಆಗುತ್ತಿದೆ...]</div>
+      </div>
+    </section>
+    <section id="models" class="section" role="tabpanel" aria-labelledby="models-tab">
+      <input type="text" autocomplete="off" class="search-bar" id="searchModels"
+             placeholder="search... | [translate:ಹುಡುಕಿ...]" data-en-ph="search..." data-ka-ph="[translate:ಹುಡುಕಿ...]">
+      <div class="filters" id="modelFilters"></div>
+      <div class="grid" id="modelsGrid">
+        <div class="loading">loading... | [translate:ಲೋಡ್ ಆಗುತ್ತಿದೆ...]</div>
+      </div>
+    </section>
+    <div class="ascii-divider" aria-hidden="true">──────────────</div>
+    <footer class="footer" data-en="2025 Prisma Research Lab" data-ka="[translate:2025 ಪ್ರಿಸ್ಮಾ ರಿಸರ್ಚ್ ಲ್ಯಾಬ್]">
+      2025 Prisma Research Lab | [translate:2025 ಪ್ರಿಸ್ಮಾ ರಿಸರ್ಚ್ ಲ್ಯಾಬ್]
+    </footer>
+  </main>
+  <script>
+    // State
+    let postsData = [], modelsData = [], lang = localStorage.getItem('lang') || 'en';
+    const filters = { pubs: new Set(), models: new Set() };
+    const langBtn = document.getElementById('langBtn');
 
-  <div class="subtitle" data-en="AI Research Lab • Girish G Hegde" data-kn="AI ಸಂಶೋಧನಾ ಪ್ರಯೋಗಾಲಯ • IISER TVM">AI Research Lab • Girish G Hegde</div>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="active" data-tab="pubs" data-en="[ Publications ]" data-kn="[ ಪ್ರಕಟಣೆಗಳು ]">[ Publications ]</button>
-    <button data-tab="models" data-en="[ Models ]" data-kn="[ ಮಾದರಿಗಳು ]">[ Models ]</button>
-  </div>
-  
-  <!-- Publications Section -->
-  <section id="pubs" class="section active">
-    <input type="text" class="search-bar" id="searchPubs" placeholder="search..." data-en-ph="search..." data-kn-ph="ಹುಡುಕಿ...">
-    <div class="filters" id="pubFilters"></div>
-    <div class="grid" id="pubsGrid">
-      <div class="loading">loading...</div>
-    </div>
-  </section>
-  
-  <!-- Models Section -->
-  <section id="models" class="section">
-    <input type="text" class="search-bar" id="searchModels" placeholder="search..." data-en-ph="search..." data-kn-ph="ಹುಡುಕಿ...">
-    <div class="filters" id="modelFilters"></div>
-    <div class="grid" id="modelsGrid">
-      <div class="loading">loading...</div>
-    </div>
-  </section>
-  
-  <div class="ascii-divider">─────────────────────────────────────────</div>
-  
-  <div class="footer" data-en="© 2025 Prisma Research Lab" data-kn="© 2025 Prisma ಸಂಶೋಧನಾ ಪ್ರಯೋಗಾಲಯ">© 2025 Prisma Research Lab</div>
-
-</div>
-
-<script>
-// State
-let postsData = [];
-let modelsData = [];
-let lang = localStorage.getItem('lang') || 'en';
-let filters = { pubs: new Set(), models: new Set() };
-
-// Theme
-const themeBtn = document.getElementById('themeBtn');
-const theme = localStorage.getItem('theme') || 'dark';
-if (theme === 'light') document.body.classList.add('light');
-
-themeBtn.onclick = () => {
-  document.body.classList.toggle('light');
-  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
-};
-
-// Language
-const langBtn = document.getElementById('langBtn');
-
-function applyLang(l) {
-  document.querySelectorAll('[data-en]').forEach(el => {
-    const text = el.getAttribute(`data-${l}`);
-    if (text) el.textContent = text;
-  });
-  
-  document.querySelectorAll('[data-en-ph]').forEach(el => {
-    const text = el.getAttribute(`data-${l}-ph`);
-    if (text) el.placeholder = text;
-  });
-  
-  langBtn.textContent = l === 'en' ? 'KN' : 'EN';
-  lang = l;
-  localStorage.setItem('lang', l);
-  
-  displayPosts(postsData);
-  displayModels(modelsData);
-}
-
-applyLang(lang);
-langBtn.onclick = () => applyLang(lang === 'en' ? 'kn' : 'en');
-
-// Tabs
-document.querySelectorAll('.tabs button').forEach(btn => {
-  btn.onclick = () => {
-    const tab = btn.getAttribute('data-tab');
-    
-    document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById(tab).classList.add('active');
-  };
-});
-
-// Load content
-async function loadContent(name) {
-  try {
-    const res = await fetch(`content/${name}_${lang}.txt`);
-    if (!res.ok) throw new Error();
-    return await res.text();
-  } catch {
-    if (lang === 'kn') {
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>"'`=]/g, s => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;','=':'&#61;'
+      })[s]);
+    }
+    function applyLang(l) {
+      lang = l;
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const en = el.getAttribute('data-en') || '';
+        const ka = el.getAttribute('data-ka') || '';
+        el.textContent = l === 'en' ? en : ka;
+      });
+      document.querySelectorAll('[data-en-ph]').forEach(el => {
+        const en = el.getAttribute('data-en-ph') || '';
+        const ka = el.getAttribute('data-ka-ph') || '';
+        el.placeholder = l === 'en' ? en : ka;
+      });
+      langBtn.textContent = l === 'en' ? 'KA' : 'EN';
+      localStorage.setItem('lang', l);
+    }
+    langBtn.onclick = () => applyLang(lang === 'en' ? 'ka' : 'en');
+    document.querySelectorAll('.tabs button').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+      };
+    });
+    async function loadContent(name) {
       try {
-        const fb = await fetch(`content/${name}_en.txt`);
-        return await fb.text();
+        const res = await fetch(`content/${escapeHTML(name)}.${lang}.txt`);
+        if (!res.ok) throw new Error();
+        return await res.text();
       } catch {
-        return 'Content unavailable.';
+        try {
+          const fb = await fetch(`content/${escapeHTML(name)}.en.txt`);
+          if (!fb.ok) throw new Error();
+          return await fb.text();
+        } catch {
+          return 'Content unavailable. | [translate:ವಿಷಯ ಲಭ್ಯವಿಲ್ಲ.]';
+        }
       }
     }
-    return 'Content unavailable.';
-  }
-}
-
-// Publications
-async function loadPosts() {
-  try {
-    const res = await fetch('data/posts.json');
-    postsData = (await res.json()).posts;
-    displayPosts(postsData);
-    setupPubFilters();
-  } catch {
-    document.getElementById('pubsGrid').innerHTML = '<div class="empty">Failed to load.</div>';
-  }
-}
-
-async function displayPosts(posts) {
-  const grid = document.getElementById('pubsGrid');
-  
-  if (posts.length === 0) {
-    grid.innerHTML = '<div class="empty">No publications found.</div>';
-    return;
-  }
-  
-  const cards = await Promise.all(posts.map(async p => {
-    const content = await loadContent(p.content);
-    const title = p[`title_${lang}`] || p.title_en;
-    
-    return `
-      <div class="card">
-        <div class="card-title">${title}</div>
-        <div class="card-meta">${p.author} • ${p.date}</div>
-        <div class="card-content">${content}</div>
-        ${p.tags ? `<div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
-        <a href="${p.pdf}" class="btn" download>↓ PDF</a>
-      </div>
-    `;
-  }));
-  
-  grid.innerHTML = cards.join('');
-}
-
-function setupPubFilters() {
-  const tags = [...new Set(postsData.flatMap(p => p.tags || []))];
-  const cont = document.getElementById('pubFilters');
-  
-  cont.innerHTML = tags.map(t => `<button class="filter-btn" data-f="${t}">${t}</button>`).join('');
-  
-  cont.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.onclick = () => {
-      const f = btn.getAttribute('data-f');
-      
-      if (filters.pubs.has(f)) {
-        filters.pubs.delete(f);
-        btn.classList.remove('active');
-      } else {
-        filters.pubs.add(f);
-        btn.classList.add('active');
+    async function loadPosts() {
+      try {
+        const res = await fetch('data/posts.json');
+        const json = await res.json();
+        postsData = json.posts || [];
+        displayPosts(postsData);
+        setupPubFilters();
+      } catch {
+        document.getElementById('pubsGrid').innerHTML =
+          '<div class="empty">Failed to load. | [translate:ಲೋಡ್ ವಿಫಲವಾಗಿದೆ.]</div>';
       }
-      
-      filterPosts();
-    };
-  });
-}
-
-function filterPosts() {
-  const search = document.getElementById('searchPubs').value.toLowerCase();
-  
-  const filtered = postsData.filter(p => {
-    const title = (p[`title_${lang}`] || p.title_en).toLowerCase();
-    const matchSearch = title.includes(search) || p.author.toLowerCase().includes(search);
-    const matchFilter = filters.pubs.size === 0 || (p.tags && p.tags.some(t => filters.pubs.has(t)));
-    
-    return matchSearch && matchFilter;
-  });
-  
-  displayPosts(filtered);
-}
-
-document.getElementById('searchPubs').oninput = filterPosts;
-
-// Models
-async function loadModels() {
-  try {
-    const res = await fetch('data/models.json');
-    modelsData = (await res.json()).models;
-    displayModels(modelsData);
-    setupModelFilters();
-  } catch {
-    document.getElementById('modelsGrid').innerHTML = '<div class="empty">Failed to load.</div>';
-  }
-}
-
-async function displayModels(models) {
-  const grid = document.getElementById('modelsGrid');
-  
-  if (models.length === 0) {
-    grid.innerHTML = '<div class="empty">No models found.</div>';
-    return;
-  }
-  
-  const cards = await Promise.all(models.map(async m => {
-    const content = await loadContent(m.content);
-    const name = m[`name_${lang}`] || m.name_en;
-    
-    return `
-      <div class="card">
-        <div class="card-title">${name}</div>
-        <div class="card-meta">${m.version} • ${m.date}</div>
-        <div class="card-content">${content}</div>
-        <div class="model-info">
-          <div class="model-info-item">
-            <span class="model-info-label">Framework</span>
-            <span class="model-info-value">${m.framework}</span>
-          </div>
-          <div class="model-info-item">
-            <span class="model-info-label">Type</span>
-            <span class="model-info-value">${m.fileType}</span>
-          </div>
-          <div class="model-info-item">
-            <span class="model-info-label">Size</span>
-            <span class="model-info-value">${m.fileSize}</span>
-          </div>
-          <div class="model-info-item">
-            <span class="model-info-label">Arch</span>
-            <span class="model-info-value">${m.architecture}</span>
-          </div>
-        </div>
-        <a href="${m.downloadUrl}" class="btn" download>↓ Download</a>
-      </div>
-    `;
-  }));
-  
-  grid.innerHTML = cards.join('');
-}
-
-function setupModelFilters() {
-  const fws = [...new Set(modelsData.map(m => m.framework))];
-  const cont = document.getElementById('modelFilters');
-  
-  cont.innerHTML = fws.map(f => `<button class="filter-btn" data-f="${f}">${f}</button>`).join('');
-  
-  cont.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.onclick = () => {
-      const f = btn.getAttribute('data-f');
-      
-      if (filters.models.has(f)) {
-        filters.models.delete(f);
-        btn.classList.remove('active');
-      } else {
-        filters.models.add(f);
-        btn.classList.add('active');
+    }
+    async function displayPosts(posts) {
+      const grid = document.getElementById('pubsGrid');
+      if (!posts || posts.length === 0) {
+        grid.innerHTML = '<div class="empty">No publications found. | [translate:ಪ್ರಕಾಶನೆಗಳು ಸಿಗಲಿಲ್ಲ.]</div>';
+        return;
       }
-      
-      filterModels();
-    };
-  });
-}
-
-function filterModels() {
-  const search = document.getElementById('searchModels').value.toLowerCase();
-  
-  const filtered = modelsData.filter(m => {
-    const name = (m[`name_${lang}`] || m.name_en).toLowerCase();
-    const matchSearch = name.includes(search) || m.architecture.toLowerCase().includes(search);
-    const matchFilter = filters.models.size === 0 || filters.models.has(m.framework);
-    
-    return matchSearch && matchFilter;
-  });
-  
-  displayModels(filtered);
-}
-
-document.getElementById('searchModels').oninput = filterModels;
-
-// Init
-loadPosts();
-loadModels();
-</script>
-
+      const cards = await Promise.all(posts.map(async p => {
+        const content = await loadContent(p.content);
+        const title = lang === 'en' ? (p.title?.en || '') : (p.title?.ka || p.title?.en || '');
+        const titleBi = `${p.title?.en || ''} | ${p.title?.ka || p.title?.en || ''}`;
+        const pdf = p.pdf ? `<a href="${escapeHTML(p.pdf)}" class="btn" target="_blank" rel="noopener noreferrer">download PDF | [translate:PDF ಡೌನ್‌ಲೋಡ್]</a>` : '';
+        const tags = p.tags ? `<div class="tags">${p.tags.map(t => `<span class="tag">${escapeHTML(t)}</span>`).join(' ')}</div>` : '';
+        return `
+          <div class="card" tabindex="0">
+            <div class="card-title">${escapeHTML(titleBi)}</div>
+            <div class="card-meta">${escapeHTML(p.author || '')} • ${escapeHTML(p.date || '')}</div>
+            <div class="card-content">${escapeHTML(content)}</div>
+            ${tags}
+            ${pdf}
+          </div>
+        `;
+      }));
+      grid.innerHTML = cards.join('');
+    }
+    function setupPubFilters() {
+      const tags = [...new Set((postsData || []).flatMap(p => p.tags || []))];
+      const cont = document.getElementById('pubFilters');
+      cont.innerHTML = tags.map(f => `<button class="filter-btn" data-f="${escapeHTML(f)}">${escapeHTML(f)}</button>`).join('');
+      cont.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.onclick = () => {
+          const f = btn.getAttribute('data-f');
+          if (filters.pubs.has(f)) { filters.pubs.delete(f); btn.classList.remove('active'); }
+          else { filters.pubs.add(f); btn.classList.add('active'); }
+          filterPosts();
+        };
+      });
+      document.getElementById('searchPubs').oninput = filterPosts;
+    }
+    function filterPosts() {
+      const search = (document.getElementById('searchPubs').value || '').toLowerCase();
+      const filtered = (postsData || []).filter(p => {
+        const enTitle = (p.title?.en || '').toLowerCase();
+        const kaTitle = (p.title?.ka || '').toLowerCase();
+        const name = `${enTitle} ${kaTitle}`;
+        const matchSearch = name.includes(search) || (p.author || '').toLowerCase().includes(search);
+        const matchFilter = filters.pubs.size === 0 || (p.tags || []).some(t => filters.pubs.has(t));
+        return matchSearch && matchFilter;
+      });
+      displayPosts(filtered);
+    }
+    async function loadModels() {
+      try {
+        const res = await fetch('data/models.json');
+        const json = await res.json();
+        modelsData = json.models || [];
+        displayModels(modelsData);
+        setupModelFilters();
+      } catch {
+        document.getElementById('modelsGrid').innerHTML =
+          '<div class="empty">Failed to load. | [translate:ಲೋಡ್ ವಿಫಲವಾಗಿದೆ.]</div>';
+      }
+    }
+    async function displayModels(models) {
+      const grid = document.getElementById('modelsGrid');
+      if (!models || models.length === 0) {
+        grid.innerHTML = '<div class="empty">No models found. | [translate:ಮಾದರಿ ಸಿಗಲಿಲ್ಲ.]</div>';
+        return;
+      }
+      const cards = await Promise.all(models.map(async m => {
+        const content = await loadContent(m.content);
+        const nameBi = `${m.name?.en || ''} | ${m.name?.ka || m.name?.en || ''}`;
+        return `
+          <div class="card" tabindex="0">
+            <div class="card-title">${escapeHTML(nameBi)}</div>
+            <div class="card-meta">${escapeHTML(m.version || '')} • ${escapeHTML(m.date || '')}</div>
+            <div class="card-content">${escapeHTML(content)}</div>
+            <div class="model-info">
+              <div class="model-info-item">
+                <span class="model-info-label">Framework</span>
+                <span class="model-info-value">${escapeHTML(m.framework || '')}</span>
+              </div>
+              <div class="model-info-item">
+                <span class="model-info-label">Type</span>
+                <span class="model-info-value">${escapeHTML(m.fileType || '')}</span>
+              </div>
+              <div class="model-info-item">
+                <span class="model-info-label">Size</span>
+                <span class="model-info-value">${escapeHTML(m.fileSize || '')}</span>
+              </div>
+              <div class="model-info-item">
+                <span class="model-info-label">Arch</span>
+                <span class="model-info-value">${escapeHTML(m.architecture || '')}</span>
+              </div>
+            </div>
+            ${m.downloadUrl ? `<a href="${escapeHTML(m.downloadUrl)}" class="btn" target="_blank" rel="noopener noreferrer">download | [translate:ಡೌನ್‌ಲೋಡ್]</a>` : ''}
+          </div>
+        `;
+      }));
+      grid.innerHTML = cards.join('');
+    }
+    function setupModelFilters() {
+      const fws = [...new Set((modelsData || []).map(m => m.framework).filter(Boolean))];
+      const cont = document.getElementById('modelFilters');
+      cont.innerHTML = fws.map(f => `<button class="filter-btn" data-f="${escapeHTML(f)}">${escapeHTML(f)}</button>`).join('');
+      cont.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.onclick = () => {
+          const f = btn.getAttribute('data-f');
+          if (filters.models.has(f)) { filters.models.delete(f); btn.classList.remove('active'); }
+          else { filters.models.add(f); btn.classList.add('active'); }
+          filterModels();
+        };
+      });
+      document.getElementById('searchModels').oninput = filterModels;
+    }
+    function filterModels() {
+      const search = (document.getElementById('searchModels').value || '').toLowerCase();
+      const filtered = (modelsData || []).filter(m => {
+        const en = (m.name?.en || '').toLowerCase();
+        const ka = (m.name?.ka || '').toLowerCase();
+        const name = `${en} ${ka}`;
+        const matchSearch = name.includes(search) || (m.architecture || '').toLowerCase().includes(search);
+        const matchFilter = filters.models.size === 0 || filters.models.has(m.framework);
+        return matchSearch && matchFilter;
+      });
+      displayModels(filtered);
+    }
+    async function init() {
+      applyLang(lang);
+      await loadPosts();
+      await loadModels();
+    }
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>
+
 

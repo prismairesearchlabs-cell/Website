@@ -342,7 +342,7 @@ body.light .footer {
 <body>
 
 <div class="controls">
-  <button class="ctrl-btn" id="langBtn">EN</button>
+  <button class="ctrl-btn" id="langBtn">KN</button>
   <button class="ctrl-btn" id="themeBtn">◐</button>
 </div>
 
@@ -408,19 +408,26 @@ let postsData = [];
 let modelsData = [];
 let currentLang = 'en';
 let filters = { pubs: new Set(), models: new Set() };
+let currentTheme = 'dark';
 
-// Initialize theme
-const savedTheme = localStorage.getItem('theme') || 'dark';
-if (savedTheme === 'light') {
-  document.body.classList.add('light');
+// Initialize theme from memory
+function initTheme() {
+  currentTheme = 'dark';
+  document.body.classList.remove('light');
 }
+
+// Initialize
+initTheme();
 
 // Theme toggle
 const themeBtn = document.getElementById('themeBtn');
 themeBtn.addEventListener('click', function() {
-  document.body.classList.toggle('light');
-  const newTheme = document.body.classList.contains('light') ? 'light' : 'dark';
-  localStorage.setItem('theme', newTheme);
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  if (currentTheme === 'light') {
+    document.body.classList.add('light');
+  } else {
+    document.body.classList.remove('light');
+  }
 });
 
 // Language toggle
@@ -428,7 +435,6 @@ const langBtn = document.getElementById('langBtn');
 langBtn.addEventListener('click', function() {
   currentLang = currentLang === 'en' ? 'kn' : 'en';
   langBtn.textContent = currentLang === 'en' ? 'KN' : 'EN';
-  localStorage.setItem('lang', currentLang);
   
   // Update subtitle
   const subtitle = document.querySelector('.subtitle-text');
@@ -457,12 +463,8 @@ langBtn.addEventListener('click', function() {
   displayModels(modelsData);
 });
 
-// Initialize language from storage
-const savedLang = localStorage.getItem('lang') || 'en';
-if (savedLang !== 'en') {
-  currentLang = savedLang;
-  langBtn.textContent = 'EN';
-}
+// Set initial language button text
+langBtn.textContent = 'KN';
 
 // Tabs
 document.querySelectorAll('.tab-btn').forEach(btn => {

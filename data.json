@@ -1,0 +1,16 @@
+{
+  "models": [
+    {
+      "name_en": "PrismaNet",
+      "description_en": "Top performing model.",
+      "version": "v1.0",
+      "date": "2025-10-12",
+      "framework": "PyTorch",
+      "fileType": "pt",
+      "fileSize": "300MB",
+      "architecture": "Transformer",
+      "downloadUrl": "https://yourdomain.net/models/prismanet-v1.pt"
+    }
+  
+  ]
+}

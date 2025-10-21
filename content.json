@@ -1,0 +1,13 @@
+{
+  "blogs": [
+    {
+      "headline_en": "First Blog Title",
+      "author": "Author Name",
+      "date": "2025-10-10",
+      "excerpt": "Short summary...",
+      "tags": ["AI", "Research"],
+      "path": "https://yourblog.url/full-blog"
+    }
+  ]
+}
+

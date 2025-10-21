@@ -1,13 +1,15 @@
 {
   "blogs": [
     {
-      "headline_en": "First Blog Title",
-      "author": "Author Name",
+      "headline_en": "Hello There, We Meet Again",
+      "author": "Girish G Hegde",
       "date": "2025-10-10",
-      "excerpt": "Short summary...",
-      "tags": ["AI", "Research"],
+      "excerpt": "Hey there! Welcome to Girish’s tiny little corner of the internet. From wild ideas about AI and the latest ML trends to quirky questions and random thoughts—this is a place where curiosity lives. If technology excites you or you’re just up for a chat, you’re right at home here. Don’t hesitate to message me anytime—I genuinely enjoy meeting fellow explorers.",
+      "tags": ["AI", "Research", "me"],
       "path": "https://yourblog.url/full-blog"
     }
   ]
 }
+
+
 
